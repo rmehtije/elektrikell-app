@@ -11,7 +11,7 @@ function Body() {
 
     useEffect(() => {
         getPriceData()
-            .then(({ success, data, messages}) => {
+            .then(({ success, data, messages }) => {
 
                 if (!success) {
                     throw messages[0];
