@@ -32,7 +32,7 @@ function App() {
           lowPriceTimestamp={lowPriceTimestamp}
         />
         : <FooterHighPrice />}
-      {lowPriceTimestamp && <Loading />}
+      {!lowPriceTimestamp && <Loading />}
     </>
   );
 }

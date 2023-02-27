@@ -1,13 +1,10 @@
-import Container from 'react-bootstrap/Container';
 import Spinner from 'react-bootstrap/Spinner';
 
 function Loading() {
     return (
-        <Container>
-            <div className="position-absolute top-50 start-50 translate-middle d-flex align-items-center">
-                <Spinner animation="border" variant="primary" /><div className="fs-4 px-2">Elektrikell</div>
-            </div>
-        </Container>
+        <div className="position-fixed w-100 h-100 top-0 d-flex bg-white align-items-center justify-content-center" style={{zIndex: 2}}>
+            <Spinner animation="border" variant="primary" /><div className="fs-4 px-2">Elektrikell</div>
+        </div>
     );
 }
 

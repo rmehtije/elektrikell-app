@@ -6,24 +6,32 @@ import {
     XAxis,
     YAxis,
     Tooltip,
-    Legend,
     Line,
     ReferenceLine,
-    ReferenceArea,
 } from 'recharts';
 import { getPriceData } from '../services/apiService';
 import ErrorModal from '../ErrorModal';
 import moment from 'moment';
+import AreaLow from './AreaLow';
+import AreaHigh from './AreaHigh';
+import Button from 'react-bootstrap/Button';
+import DateForm from './DateForm';
+
+const pastHours = 10;
+const start = moment().subtract(pastHours, 'hours').format();
+const end = moment().add(30, 'hours').format();
 
 function Body({ hourRange, activePrice, setLowPriceTimestamp }) {
-
     const [data, setData] = useState([]);
     const [errorMessage, setErrorMessage] = useState(null);
-    const [x1, setX1] = useState(0);
-    const [xHigh, setXHigh] = useState([]);
+    const [rangePrices, setRangePrices] = useState(null);
+    const [showForm, setShowForm] = useState(false);
+    const [searchDate, setSearchDate] = useState({
+        start, end, pastHours
+    });
 
     useEffect(() => {
-        getPriceData()
+        getPriceData(searchDate)
             .then(({ success, data, messages }) => {
 
                 if (!success) {
@@ -42,7 +50,7 @@ function Body({ hourRange, activePrice, setLowPriceTimestamp }) {
                 setData(newData);
             })
             .catch((error) => setErrorMessage(error.toString()));
-    }, []);
+    }, [searchDate]);
 
     useEffect(() => {
         if (data.length) {
@@ -63,26 +71,9 @@ function Body({ hourRange, activePrice, setLowPriceTimestamp }) {
             });
 
             rangePrices.sort((a, b) => a.sum - b.sum);
-
-            if (activePrice === 'low') {
-                setX1(rangePrices[0].i);
-                setLowPriceTimestamp(rangePrices[0].timestamp);
-                setXHigh([]);
-
-            } else {
-                rangePrices.reverse();
-                const half = rangePrices.slice(0, rangePrices.length / 2);
-                let sum = 0;
-                half.forEach(v => {
-                    sum += v.sum;
-                });
-                let average = sum / half.length;
-                setXHigh(half.filter(v => v.sum > average));
-
-            }
-
+            setRangePrices(rangePrices);
         }
-    }, [hourRange, data, activePrice, setLowPriceTimestamp]);
+    }, [activePrice, hourRange, data]);
 
     return (
         <>
@@ -92,16 +83,19 @@ function Body({ hourRange, activePrice, setLowPriceTimestamp }) {
                     <XAxis dataKey="hour" />
                     <YAxis />
                     <Tooltip />
-                    <Legend />
                     <Line type="monotone" dataKey="price" stroke="#8884d8" />
                     <ReferenceLine x={data.findIndex((el) => el.current)} stroke="red" />
-                    {xHigh.length ? xHigh.map(x => (
-                        <ReferenceArea key={x.i} x1={x.i + 10} x2={x.i + 10 + 1} stroke="red" fill="red" strokeOpacity={0.3} fillOpacity={0.3} />
-                    )) : (
-                        <ReferenceArea x1={x1 + 10} x2={x1 + hourRange + 10} stroke="green" fill="green" strokeOpacity={0.3} fillOpacity={0.3} />
-                    )}
+                    {activePrice === 'high' ?
+                        AreaHigh({ rangePrices })
+                        :
+                        AreaLow({ hourRange, setLowPriceTimestamp, rangePrices, searchDate })
+                    }
                 </LineChart>
             </ResponsiveContainer>
+            <Button variant="outline-secondary" onClick={() => setShowForm(true)} size="sm">
+                Määra kuupäevad
+            </Button>
+            <DateForm show={showForm} setShow={setShowForm} setSearchDate={setSearchDate} />
             <ErrorModal errorMessage={errorMessage} handleClose={() => setErrorMessage(null)} />
         </>
     );
