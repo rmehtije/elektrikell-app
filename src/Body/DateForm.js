@@ -36,7 +36,7 @@ function DateForm({ show, setShow, setSearchDate }) {
         start = moment(start);
         end = moment(end);
 
-        if(start.diff(end, 'days') < 1) {
+        if(start.diff(end, 'days') >= 1) {
             setErrormessage('Alg ja Lopp kuupaeva vahe peab olema rohkem kui 1 paev');
             return;
         }

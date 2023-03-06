@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import {
-    ResponsiveContainer,
-    LineChart,
     CartesianGrid,
     XAxis,
     YAxis,
@@ -30,7 +28,7 @@ function Body({ hourRange, activePrice, setLowPriceTimestamp }) {
     });
 
     useEffect(() => {
-        
+
         getPriceData(searchDate)
             .then(({ success, data, messages }) => {
 
@@ -52,23 +50,28 @@ function Body({ hourRange, activePrice, setLowPriceTimestamp }) {
             .catch((error) => setErrorMessage(error.toString()));
     }, [searchDate]);
 
+    const chartsChildren = (
+        <>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="hour" />
+            <YAxis />
+            <Tooltip />
+            <Line type="monotone" dataKey="price" stroke="#8884d8" />
+            <ReferenceLine x={data?.findIndex((el) => el.current)} stroke="red" />
+        </>
+    );
+
     return (
         <>
-            <ResponsiveContainer width="100%" height={400} >
-                <LineChart data={data}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="hour" />
-                    <YAxis />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="price" stroke="#8884d8" />
-                    <ReferenceLine x={data?.findIndex((el) => el.current)} stroke="red" />
-                    {activePrice === 'high' ?
-                        AreaHigh({ data })
-                        :
-                        AreaLow({ data, hourRange, setLowPriceTimestamp, searchDate })
-                    }
-                </LineChart>
-            </ResponsiveContainer>
+            {activePrice === 'high' ?
+                <AreaHigh data={ data }>
+                    {chartsChildren}
+                </AreaHigh>
+                :
+                <AreaLow {...{ data, hourRange, setLowPriceTimestamp, searchDate }} >
+                    {chartsChildren}
+                </AreaLow>
+            }
             <Button variant="outline-secondary" onClick={() => setShowForm(true)} size="sm">
                 Määra kuupäevad
             </Button>
