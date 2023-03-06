@@ -2,6 +2,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
 function ErrorModal({ handleClose, errorMessage }) {
+    console.log('ErrorModal');
     return (
         <Modal show={!!errorMessage} onHide={handleClose}>
             <Modal.Header closeButton>

@@ -6,7 +6,7 @@ import ErrorModal from '../ErrorModal';
 import { getCurrentPrice } from '../services/apiService';
 
 function PriceHeader(props) {
-
+    console.log('PriceHeader');
     const [currentPrice, setCurrentPrice] = useState(0);
     const [errorMessage, setErrorMessage] = useState(null);
 

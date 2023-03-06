@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 function SelectPriceType({ activePrice, setActivePrice }) {
+  console.log('SelectPriceType');
   return (
     <ButtonGroup>
       <Button active={activePrice === 'low'} onClick={() => setActivePrice('low')}>Odavad Tunnid</Button>

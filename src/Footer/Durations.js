@@ -1,10 +1,16 @@
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import { useSelector, useDispatch } from 'react-redux';
+import { setHourRange } from '../services/stateService';
 
-function Durations({ hourRange, setHourRange }) {
-
+function Durations() {
+    console.log('Duractions');
     const buttons = [1, 2, 3, 4, 6, 8];
+
+    const hourRange = useSelector((state) => state.hourRange);
+
+    const dispatch = useDispatch();
 
     return (
         <ButtonToolbar aria-label="Toolbar with button groups" className="justify-content-center">
@@ -13,7 +19,7 @@ function Durations({ hourRange, setHourRange }) {
                     <Button
                         key={time}
                         active={time === hourRange}
-                        onClick={() => setHourRange(time)}>
+                        onClick={() => dispatch(setHourRange(time))}>
                         {time}h
                     </Button>
                 ))}

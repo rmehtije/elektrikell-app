@@ -3,6 +3,7 @@ import { ReferenceArea, ResponsiveContainer, LineChart } from "recharts";
 import { rangePricesGenerator } from "../helpers/rangePrices";
 
 function AreaHigh({ data, children }) {
+    console.log('AreaHigh');
     const [xHigh, setXHigh] = useState(null);
 
     useEffect(() => {

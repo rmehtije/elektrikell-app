@@ -19,7 +19,8 @@ const pastHours = 10;
 const start = moment().subtract(pastHours, 'hours').format();
 const end = moment().add(30, 'hours').format();
 
-function Body({ hourRange, activePrice, setLowPriceTimestamp }) {
+function Body({ activePrice }) {
+    console.log('Body');
     const [data, setData] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [showForm, setShowForm] = useState(false);
@@ -46,6 +47,7 @@ function Body({ hourRange, activePrice, setLowPriceTimestamp }) {
                 });
 
                 setData(newData);
+                console.log('getPriceData');
             })
             .catch((error) => setErrorMessage(error.toString()));
     }, [searchDate]);
@@ -68,7 +70,7 @@ function Body({ hourRange, activePrice, setLowPriceTimestamp }) {
                     {chartsChildren}
                 </AreaHigh>
                 :
-                <AreaLow {...{ data, hourRange, setLowPriceTimestamp, searchDate }} >
+                <AreaLow {...{ data, searchDate }} >
                     {chartsChildren}
                 </AreaLow>
             }

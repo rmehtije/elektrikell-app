@@ -6,6 +6,7 @@ import ErrorModal from '../ErrorModal';
 import moment from 'moment';
 
 function DateForm({ show, setShow, setSearchDate }) {
+    console.log('DateForm');
     const [errorMessage, setErrormessage] = useState(null);
 
     const handleClose = () => setShow(false);

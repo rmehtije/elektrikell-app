@@ -11,11 +11,10 @@ import Loading from './Loading';
 import { useParams } from 'react-router-dom';
 
 function ElektriKell() {
+  console.log('ElektriKell');
   const params = useParams();
 
   const [activePrice, setActivePrice] = useState('low');
-  const [hourRange, setHourRange] = useState(1);
-  const [lowPriceTimestamp, setLowPriceTimestamp] = useState(0);
   
   useEffect(() => {
     params.activePrice && setActivePrice(params.activePrice);
@@ -27,17 +26,13 @@ function ElektriKell() {
         <Container className="text-center">
           <NavBar />
           <PriceHeader activePrice={activePrice} setActivePrice={setActivePrice} />
-          <Body hourRange={hourRange} activePrice={activePrice} setLowPriceTimestamp={setLowPriceTimestamp} />
+          <Body activePrice={activePrice} />
         </Container>
       </div>
       {activePrice === 'low' ?
-        <FooterLowPrice
-          hourRange={hourRange}
-          setHourRange={setHourRange}
-          lowPriceTimestamp={lowPriceTimestamp}
-        />
+        <FooterLowPrice />
         : <FooterHighPrice />}
-      {!lowPriceTimestamp && <Loading />}
+      <Loading />
     </>
   );
 }
