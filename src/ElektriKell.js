@@ -6,7 +6,7 @@ import PriceHeader from './Header/PriceHeader';
 import FooterHighPrice from './Footer/FooterHighPrice';
 import Body from './Body/Body';
 import FooterLowPrice from './Footer/FooterLowPrice';
-// import ErrorModal from './ErrorModal';
+import ErrorModal from './ErrorModal';
 import Loading from './Loading';
 import { useParams } from 'react-router-dom';
 
@@ -33,6 +33,7 @@ function ElektriKell() {
         <FooterLowPrice />
         : <FooterHighPrice />}
       <Loading />
+      <ErrorModal />
     </>
   );
 }

@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import ErrorModal from '../ErrorModal';
 import moment from 'moment';
+import { setErrorMessage } from '../services/stateService';
+import { useDispatch } from 'react-redux';
 
 function DateForm({ show, setShow, setSearchDate }) {
     console.log('DateForm');
-    const [errorMessage, setErrormessage] = useState(null);
+
+    const dispatch = useDispatch();
 
     const handleClose = () => setShow(false);
 
@@ -20,17 +22,17 @@ function DateForm({ show, setShow, setSearchDate }) {
         const currentDate = moment();
 
         if(!start || !end) {
-            setErrormessage('Alg ja Lopp kuupaevad peavad olema maaratud');
+            dispatch(setErrorMessage('Alg ja Lopp kuupaevad peavad olema maaratud'));
             return;
         }
 
         if(currentDate.isBefore(start)) {
-            setErrormessage('Alg kuupaev peab olema minevikus');
+            dispatch(setErrorMessage('Alg kuupaev peab olema minevikus'));
             return;
         }
 
         if(currentDate.isAfter(end)) {
-            setErrormessage('Lopp kuupaev peab olema tulevikus');
+            dispatch(setErrorMessage('Lopp kuupaev peab olema tulevikus'));
             return;
         }
 
@@ -38,7 +40,7 @@ function DateForm({ show, setShow, setSearchDate }) {
         end = moment(end);
 
         if(start.diff(end, 'days') >= 1) {
-            setErrormessage('Alg ja Lopp kuupaeva vahe peab olema rohkem kui 1 paev');
+            dispatch(setErrorMessage('Alg ja Lopp kuupaeva vahe peab olema rohkem kui 1 paev'));
             return;
         }
 
@@ -72,7 +74,6 @@ function DateForm({ show, setShow, setSearchDate }) {
                     </Form>
                 </Offcanvas.Body>
             </Offcanvas>
-            <ErrorModal errorMessage={errorMessage} handleClose={() => setErrormessage(null)} />
         </>
     );
 }
