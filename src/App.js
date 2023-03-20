@@ -5,10 +5,10 @@ import ElektriKell from './ElektriKell';
 function App() {
     return (
         <Routes>
-            <Route path="/" element={<ElektriKell />} />
-            <Route path="/:activePrice" element={<ElektriKell />} />
-            <Route path="/low/:durationParam" element={<ElektriKell />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/elektrikell-app" element={<ElektriKell />} />
+            <Route path="/elektrikell-app/:activePrice" element={<ElektriKell />} />
+            <Route path="/elektrikell-app/low/:durationParam" element={<ElektriKell />} />
+            <Route path="/elektrikell-app/about" element={<About />} />
         </Routes>
     );
 }

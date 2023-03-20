@@ -8,12 +8,12 @@ function NavBar() {
   return (
     <Navbar bg="light" expand="lg" className="mb-2">
       <Container>
-        <Navbar.Brand href="#home">Elektrikell</Navbar.Brand>
+        <Navbar.Brand href="/elektrikell-app">Elektrikell</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Link to="/about" className="nav-link">Minust</Link>
-            <Link to="/high" className="nav-link">Tipptund</Link>
+            <Link to="/elektrikell-app/about" className="nav-link">Minust</Link>
+            <Link to="/elektrikell-app/high" className="nav-link">Tipptund</Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
