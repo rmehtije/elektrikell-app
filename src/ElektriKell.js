@@ -12,6 +12,9 @@ import { useParams } from 'react-router-dom';
 
 function ElektriKell() {
   console.log('ElektriKell');
+
+  // useParams eto hook ot react-router-dom kotoryj slushajet peredannyje jemu parametry s sylki i naznachajet ih vseh v odin object
+  // pri poluchenii novyh prametrah inicializirujetsa render komponenta;
   const params = useParams();
 
   const [activePrice, setActivePrice] = useState('low');

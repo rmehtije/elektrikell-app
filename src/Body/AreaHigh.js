@@ -3,7 +3,16 @@ import { ReferenceArea, ResponsiveContainer, LineChart } from "recharts";
 import { rangePricesGenerator } from "../helpers/rangePrices";
 
 function AreaHigh({ data, children }) {
-    console.log('AreaHigh');
+
+    // useState eto react hook kotoryj pozvoljajet rabotat' s sostojanijem komponenta.
+    // Sostojanije po suti eto peremennaja kotoraja dezhqt v sebja ljuboj tip dannyh kotoryj kosajetsa tol'ko etogo komponenta
+    // useState prinemajet kak argument iznachal'noe sostojanije. 
+    // Toejst pri pervoj otrisovke komponenta naznachitsa peremennaja s etim iznachalnym znachenijem.
+    // useState pri inicializacii vozvrashajet massive iz dvuh elementov.
+    // [0] = iznachal'noe sostojanie
+    // [1] = funkcija kotoroje menjajet znachenije sostojanija. V nachalo nazvanije obychno stavim 'set'.
+    // Pri inicializacii izmenenija sostojanija zapuskajetsa novaja otrisovka komponenta;
+    // Vse hooki reacta nazyvajutsa s slovo 'use' i vse oni vozdejstvujut na atrisovku komponenta.
     const [xHigh, setXHigh] = useState(null);
 
     useEffect(() => {
